@@ -1,9 +1,11 @@
 const mysql = require('mysql2/promise');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: DB_PASSWORD,
+    password: process.env.DB_PASSWORD,
     database: 'RunFastAS',
     waitForConnections: true, 
     connectionLimit: 10,
