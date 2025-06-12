@@ -57,7 +57,7 @@ const getMyBookings = async (req, res) => {
 
     try {
         const [bookings] = await pool.query(
-            `SELECT b.bookingID, s.sessionID, s.location, s.sessionDate, s.startTime, s.endTime, s.instructorName
+            `SELECT b.bookingID, s.sessionID, s.location, s.sessionDate, s.startTime, s.endTime, s.availableSlots, s.instructorName
              FROM Bookings b
              JOIN SpinningSession s ON b.sessionID = s.sessionID
              WHERE b.userID = ?`,

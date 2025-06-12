@@ -100,11 +100,38 @@ const deleteUser = async (req, res) => {
     }
 }
 
+const updateMembershipPlan = async (req, res) => {
+    const { id } = req.params; // ID from the URL
+    const { membershipPlan } = req.body;
+    const requester = req.user; // From auth middleware
+  
+    if (!membershipPlan) {
+      return res.status(400).json({ message: "Membership plan required" });
+    }
+  
+    // Only allow if user is updating their own plan or is admin
+    if (parseInt(id) !== requester.userID && requester.role !== 'admin') {
+      return res.status(403).json({ message: 'Not authorized to update this user' });
+    }
+  
+    try {
+      await pool.query(
+        'UPDATE users SET membershipPlan = ? WHERE userID = ?',
+        [membershipPlan, id]
+      );
+      res.status(200).json({ message: 'Membership updated successfully' });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+  
+
 module.exports = {
     register,
     login,
     getUser,
     getAllUsers,
     updateUser,
-    deleteUser
+    deleteUser,
+    updateMembershipPlan
 }

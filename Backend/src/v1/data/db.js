@@ -5,7 +5,7 @@ dotenv.config();
 const pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-    password: process.env.DB_PASSWORD,
+    password: "skole123",
     database: 'RunFastAS',
     waitForConnections: true, 
     connectionLimit: 10,
